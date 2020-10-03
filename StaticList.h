@@ -7,6 +7,7 @@
 
 #include <array>
 #include "StaticListException.h"
+#include <string>
 
 template<typename T, int MAXSIZE = 2048>
 class StaticList {
@@ -47,6 +48,8 @@ public:
     int getNext(const int &) const;
 
     void eraseAll();
+
+    std::string toString();
 
     StaticList &operator=(const StaticList &);
 };
@@ -173,6 +176,15 @@ template<typename T, int MAXSIZE>
 StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy) {
     copy(cpy);
     return *this;
+}
+
+template<typename T, int MAXSIZE>
+std::string StaticList<T, MAXSIZE>::toString() {
+    std::string ret;
+    for (int i = 0; i < getSize(); ++i) {
+        ret += std::to_string(data[i]) + "\n";
+    }
+    return ret;
 }
 
 

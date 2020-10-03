@@ -10,15 +10,11 @@ int main(){
     lista.pushBack(8);
     lista.insert(10, 0);
 
-    for (int i = 0; i <= lista.getLast(); ++i) {
-        std::cout<<lista.fetch(i)<<std::endl;
-    }
 
-    std::cout<<std::endl;
+
+    std::cout<<lista.toString()<<std::endl;
 
     lista.erase(1);
 
-    for (int i = 0; i <= lista.getLast(); ++i) {
-        std::cout<<lista.fetch(i)<<std::endl;
-    }
+    std::cout<<lista.toString();
 }
