@@ -3,4 +3,4 @@ project(Lista_Estatica)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Lista_Estatica main.cpp StaticList.h StaticListException.h)
+add_executable(Lista_Estatica main.cpp StaticList.h StaticListException.h Cancion.cpp Cancion.h Menu.cpp Menu.h)

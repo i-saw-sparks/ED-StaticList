@@ -12,7 +12,7 @@
 template<typename T, int MAXSIZE = 2048>
 class StaticList {
 private:
-    std::array<int, MAXSIZE> data;
+    std::array<T, MAXSIZE> data;
     int last;
 
     void copy(const StaticList &);
@@ -48,8 +48,6 @@ public:
     int getNext(const int &) const;
 
     void eraseAll();
-
-    std::string toString();
 
     StaticList &operator=(const StaticList &);
 };
@@ -178,6 +176,7 @@ StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy)
     return *this;
 }
 
+/*
 template<typename T, int MAXSIZE>
 std::string StaticList<T, MAXSIZE>::toString() {
     std::string ret;
@@ -186,6 +185,6 @@ std::string StaticList<T, MAXSIZE>::toString() {
     }
     return ret;
 }
-
+*/
 
 #endif //LISTA_ESTATICA_STATICLIST_H
