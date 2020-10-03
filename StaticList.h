@@ -48,7 +48,7 @@ public:
 
     void eraseAll();
 
-    //StaticList &operator=(const StaticList &);
+    StaticList &operator=(const StaticList &);
 };
 
 template<typename T, int MAXSIZE>
@@ -167,6 +167,12 @@ int StaticList<T, MAXSIZE>::getNext(const int &pos) const {
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::eraseAll() {
     last = -1;
+}
+
+template<typename T, int MAXSIZE>
+StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy) {
+    copy(cpy);
+    return *this;
 }
 
 
