@@ -14,5 +14,11 @@ int main(){
         std::cout<<lista.fetch(i)<<std::endl;
     }
 
+    std::cout<<std::endl;
 
+    lista.erase(1);
+
+    for (int i = 0; i <= lista.getLast(); ++i) {
+        std::cout<<lista.fetch(i)<<std::endl;
+    }
 }

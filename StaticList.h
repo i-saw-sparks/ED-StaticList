@@ -16,7 +16,7 @@ private:
 
     void copy(const StaticList &);
 
-    bool validPos(const int &);
+    bool validPos(const int &) const;
 
 
 public:
@@ -84,24 +84,21 @@ void StaticList<T, MAXSIZE>::insert(const T &ins, const int &pos) {
         return;
     }
 
-    if (!validPos(pos) || (pos > last))
+    if (!validPos(pos))
         throw StaticListException("Invalid memory access");
     if (isFull())
         throw StaticListException("Invalid memory access, the list was full");
 
-    T read, write = ins;
-    for (int i = pos + 1; i <= getSize(); ++i) {
-        read = data[i];
-        data[i] = write;
-        write = read;
+    for (int i = last; i>pos ; --i) {
+        data[i+1] = data[i];
     }
+    data[pos+1] = ins;
     last++;
-
 }
 
 template<typename T, int MAXSIZE>
-bool StaticList<T, MAXSIZE>::validPos(const int &pos) {
-    return pos >= 0 && pos <= MAXSIZE - 1;
+bool StaticList<T, MAXSIZE>::validPos(const int &pos) const{
+    return pos >= 0 && pos <= last;
 }
 
 template<typename T, int MAXSIZE>
@@ -116,23 +113,20 @@ void StaticList<T, MAXSIZE>::pushBack(const T &ins) {
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::erase(const int &pos) {
-    if (!validPos(pos) || (pos > last))
+    if (!validPos(pos))
         throw StaticListException("Invalid memory access");
 
-    T read, write = ins;
-    for (int i = pos + 1; i <= getSize(); ++i) {
-        read = data[i];
-        data[i] = write;
-        write = read;
+    for (int i = pos; i < last ; ++i) {
+        data[i] = data[i+1];
     }
-    last++;
 
+    last--;
 }
 
 
 template<typename T, int MAXSIZE>
 T StaticList<T, MAXSIZE>::fetch(const int &pos) const {
-    if (pos > last)
+    if (!validPos(pos))
         throw StaticListException("Invalid memory access");
     return data[pos];
 }
@@ -164,7 +158,7 @@ int StaticList<T, MAXSIZE>::getPrevious(const int &pos) const {
 
 template<typename T, int MAXSIZE>
 int StaticList<T, MAXSIZE>::getNext(const int &pos) const {
-    if (validPos(pos + 1))
+    if (pos + 1 <= last + 1)
         return pos + 1;
     else
         throw StaticListException("Invalid memory access");
@@ -172,9 +166,6 @@ int StaticList<T, MAXSIZE>::getNext(const int &pos) const {
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::eraseAll() {
-    for (int i = 0; i < getSize(); ++i) {
-        data[i] = 0;
-    }
     last = -1;
 }
 
