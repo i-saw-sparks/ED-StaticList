@@ -70,3 +70,19 @@ bool Cancion::operator==(const Cancion &rhs) const {
 bool Cancion::operator!=(const Cancion &rhs) const {
     return !(rhs == *this);
 }
+
+bool Cancion::operator<(const Cancion &rhs) const {
+    return posicion < rhs.posicion;
+}
+
+bool Cancion::operator>(const Cancion &rhs) const {
+    return rhs < *this;
+}
+
+bool Cancion::operator<=(const Cancion &rhs) const {
+    return !(rhs < *this);
+}
+
+bool Cancion::operator>=(const Cancion &rhs) const {
+    return !(*this < rhs);
+}

@@ -32,6 +32,14 @@ public:
     bool operator==(const Cancion &rhs) const;
 
     bool operator!=(const Cancion &rhs) const;
+
+    bool operator<(const Cancion &rhs) const;
+
+    bool operator>(const Cancion &rhs) const;
+
+    bool operator<=(const Cancion &rhs) const;
+
+    bool operator>=(const Cancion &rhs) const;
 };
 
 
