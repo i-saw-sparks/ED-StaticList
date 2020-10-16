@@ -9,7 +9,7 @@
 #include "StaticListException.h"
 #include <string>
 
-template<typename T, int MAXSIZE = 2048>
+template<typename T, int MAXSIZE = 4096>
 class StaticList {
 private:
     std::array<T, MAXSIZE> data;
@@ -19,35 +19,24 @@ private:
 
     bool validPos(const int &) const;
 
-
 public:
     StaticList();
 
     StaticList(const StaticList &);
-
     bool isEmpty() const;
-
     bool isFull() const;
-
     void insert(const T &, const int &);
-
     void pushBack(const T &);
-
     void erase(const int &);
-
     T fetch(const int &) const;
-
     int getSize() const;
-
     int getFirst() const;
-
     int getLast() const;
-
     int getPrevious(const int &) const;
-
     int getNext(const int &) const;
-
     void eraseAll();
+    int binarySearch();
+    int linearSearch();
 
     StaticList &operator=(const StaticList &);
 };
@@ -175,16 +164,5 @@ StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy)
     copy(cpy);
     return *this;
 }
-
-/*
-template<typename T, int MAXSIZE>
-std::string StaticList<T, MAXSIZE>::toString() {
-    std::string ret;
-    for (int i = 0; i < getSize(); ++i) {
-        ret += std::to_string(data[i]) + "\n";
-    }
-    return ret;
-}
-*/
 
 #endif //LISTA_ESTATICA_STATICLIST_H

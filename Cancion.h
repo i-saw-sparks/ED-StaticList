@@ -10,7 +10,7 @@
 
 class Cancion {
 private:
-    std::string nombre, autor, interprete;
+    std::string nombre, autor, interprete, archivoId;
     int posicion;
 public:
     Cancion();
@@ -24,8 +24,14 @@ public:
     void setAutor(const std::string &autor);
     const std::string &getInterprete() const;
     void setInterprete(const std::string &interprete);
+    const std::string &getArchivoId() const;
+    void setArchivoId(const std::string &archivoId);
 
     const std::string toString();
+
+    bool operator==(const Cancion &rhs) const;
+
+    bool operator!=(const Cancion &rhs) const;
 };
 
 

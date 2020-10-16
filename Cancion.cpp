@@ -52,3 +52,20 @@ const std::string Cancion::toString() {
     ret += autor + " | " + interprete + " | " + nombre + " | " + std::to_string(posicion) + "\n";
     return ret;
 }
+
+void Cancion::setArchivoId(const std::string &archivoId) {
+    this->archivoId = archivoId;
+}
+
+const std::string &Cancion::getArchivoId() const {
+    return archivoId;
+}
+
+bool Cancion::operator==(const Cancion &rhs) const {
+    return nombre == rhs.nombre &&
+           archivoId == rhs.archivoId;
+}
+
+bool Cancion::operator!=(const Cancion &rhs) const {
+    return !(rhs == *this);
+}
