@@ -35,8 +35,8 @@ public:
     int getPrevious(const int &) const;
     int getNext(const int &) const;
     void eraseAll();
-    int binarySearch();
-    int linearSearch();
+    int binarySearch(const T &);
+    int linearSearch(const T &);
 
     StaticList &operator=(const StaticList &);
 };
@@ -163,6 +163,15 @@ template<typename T, int MAXSIZE>
 StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy) {
     copy(cpy);
     return *this;
+}
+
+template<typename T, int MAXSIZE>
+int StaticList<T, MAXSIZE>::linearSearch(const T &look) {
+    for (int i = 0; i < this->getSize(); ++i) {
+        if(look == this->fetch(i))
+            return i;
+    }
+    return -1;
 }
 
 #endif //LISTA_ESTATICA_STATICLIST_H

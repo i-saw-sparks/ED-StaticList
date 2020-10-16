@@ -29,6 +29,7 @@ Cancion::Cancion(const Cancion &cpy) {
     this->nombre = cpy.nombre;
     this->interprete = cpy.interprete;
     this->autor = cpy.autor;
+    this->archivoId = cpy.archivoId;
 }
 
 const std::string &Cancion::getAutor() const {
@@ -47,14 +48,14 @@ void Cancion::setInterprete(const std::string &interprete) {
     Cancion::interprete = interprete;
 }
 
-const std::string Cancion::toString() {
-    std::string ret;
-    ret += autor + " | " + interprete + " | " + nombre + " | " + std::to_string(posicion) + "\n";
-    return ret;
+void Cancion::setArchivoId(const std::string &archivo) {
+    Cancion::archivoId = archivo;
 }
 
-void Cancion::setArchivoId(const std::string &archivoId) {
-    this->archivoId = archivoId;
+const std::string Cancion::toString() {
+    std::string ret;
+    ret += autor + " | " + interprete + " | " + nombre + " | " + archivoId + ".mp3 | " +std::to_string(posicion) + "\n";
+    return ret;
 }
 
 const std::string &Cancion::getArchivoId() const {
@@ -62,8 +63,8 @@ const std::string &Cancion::getArchivoId() const {
 }
 
 bool Cancion::operator==(const Cancion &rhs) const {
-    return nombre == rhs.nombre &&
-           archivoId == rhs.archivoId;
+    return nombre == rhs.nombre ||
+           autor == rhs.autor;
 }
 
 bool Cancion::operator!=(const Cancion &rhs) const {

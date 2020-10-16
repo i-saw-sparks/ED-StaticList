@@ -48,11 +48,15 @@ void Menu::scanCancion(StaticList<Cancion, 50> &list) {
     std::cout<<"Ingrese el nombre del interprete: ";
     std::getline(std::cin >> std::ws, strIn);
     temp.setInterprete(strIn);
+    std::cout<<"Ingrese el nombre del archivo: ";
+    std::getline(std::cin >> std::ws, strIn);
+    temp.setArchivoId(strIn);
     std::cout<<"Ingrese la posicion en el ranking: ";
     std::cin>>intIn;
     temp.setPosicion(intIn);
     std::cout<<"Ingrese la posicion de la cancion en la lista: ";
     std::cin>>intIn;
+
     list.insert(temp, intIn);
 }
 

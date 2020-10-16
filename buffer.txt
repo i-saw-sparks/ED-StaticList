@@ -1,0 +1,37 @@
+Z
+Yellow
+Coldplay
+Chris
+Yellow_Par
+1
+-1
+Z
+Nights
+Frank Ocean
+Frank Ocean
+nghts_bdc
+2
+0
+Z
+Visions of Gideon
+Sufjan Stevens
+Sufjan Stevens
+vision_cmbyn
+4
+1
+Z
+American boy
+Estelle
+Estelle, Kanye
+american-boy
+5
+2
+Z
+Melodrama
+Jack Antonoff
+Lorde
+melo_2
+9
+3
+
+
