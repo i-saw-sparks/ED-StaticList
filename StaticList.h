@@ -174,4 +174,20 @@ int StaticList<T, MAXSIZE>::linearSearch(const T &look) {
     return -1;
 }
 
+template<typename T, int MAXSIZE>
+int StaticList<T, MAXSIZE>::binarySearch(const T &look) {
+    int i = 0, j = this->getLast(), mid;
+
+    while(i <= j){
+        mid = (i+j)/2;
+        if(this->fetch(mid) == look)
+            return mid;
+        if(look < this->fetch(mid))
+            j = mid-1;
+        else
+            i = mid +1;
+    }
+    return -1;
+}
+
 #endif //LISTA_ESTATICA_STATICLIST_H
