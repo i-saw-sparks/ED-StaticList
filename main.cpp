@@ -16,6 +16,9 @@ int main(){
             case 'X':
                 Menu::deleteCancion(songs);
                 break;
+            case 'S':
+                Menu::buscarCancion(songs);
+                break;
             case 'F':
                 running = false;
                 break;

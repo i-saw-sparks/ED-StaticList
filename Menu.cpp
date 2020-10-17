@@ -22,7 +22,7 @@ void Menu::list(const StaticList<Cancion, 50> &list){
 
 char Menu::options(){
     char ret;
-    std::cout<<"Z - Incluir nueva cancion     X - Eliminar una cancion   F-Salir"<<std::endl;
+    std::cout<<"Z - Incluir nueva cancion     X - Eliminar una cancion  S - Busca una cancion   F-Salir"<<std::endl;
     std::cin>>ret;
     std::cout<<std::endl<<"-------------------------------------------"<<std::endl;
     return ret;
@@ -65,5 +65,30 @@ int Menu::deleteCancion(StaticList<Cancion, 50> &list) {
     std::cout<<std::endl<<"Ingrese la posicion de la cancion en la lista: ";
     std::cin>>intIn;
     list.erase(intIn);
+    return 0;
+}
+
+int Menu::buscarCancion(StaticList<Cancion, 50> &list) {
+    std::string strIn;
+    bool method = 0;
+    Cancion canIn;
+    int res;
+
+    std::cout<<std::endl<<"Ingrese el autor o el nombre de la cancion que desea buscar: ";
+    std::getline(std::cin >> std::ws, strIn);
+    canIn.setAutor(strIn);
+    canIn.setNombre(strIn);
+    std::cout<<std::endl<<"Que metodo desea usar (1-Linear, 0-Binaria): ";
+    std::cin>>method;
+    if(method)
+        res = list.linearSearch(canIn);
+    else
+        res = list.binarySearch(canIn);
+
+    if(res!=-1)
+        std::cout<<std::endl<<list.fetch(res).toString()<<std::endl;
+    else
+        std::cout<<std::endl<<"Cancion no encontrada"<<std::endl;
+
     return 0;
 }
