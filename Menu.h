@@ -15,12 +15,13 @@ class Menu {
 public:
     Menu();
     static void header();
-    static void list(const StaticList<Cancion, 50>&);
+    static void list(const StaticList<Cancion, 4000>&);
     static char options();
-    static void scanCancion( StaticList<Cancion, 50>&);
-    static int deleteCancion(StaticList<Cancion, 50>&);
-    static int buscarCancion(StaticList<Cancion, 50>&);
-    static int printMenu(const StaticList<Cancion, 50> &);
+    static void scanCancion( StaticList<Cancion, 4000>&);
+    static int deleteCancion(StaticList<Cancion, 4000>&);
+    static int buscarCancion(StaticList<Cancion, 4000>&);
+    static int printMenu(const StaticList<Cancion, 4000> &);
+    static void ordenarLista(StaticList<Cancion, 4000>&);
 };
 
 

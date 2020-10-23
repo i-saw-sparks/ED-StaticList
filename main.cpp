@@ -4,7 +4,7 @@
 #include "Cancion.h"
 
 int main(){
-    StaticList<Cancion, 50> songs;
+    StaticList<Cancion, 4000> songs;
 
     bool running = true;
 
@@ -18,6 +18,9 @@ int main(){
                 break;
             case 'S':
                 Menu::buscarCancion(songs);
+                break;
+            case 'P':
+                Menu::ordenarLista(songs);
                 break;
             case 'F':
                 running = false;

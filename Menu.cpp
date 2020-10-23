@@ -13,7 +13,7 @@ Menu::Menu() {
 
 }
 
-void Menu::list(const StaticList<Cancion, 50> &list){
+void Menu::list(const StaticList<Cancion, 4000> &list){
     std::cout<<"\033[1;44;31m";
     for (int i = 0; i < list.getSize(); ++i) {
         std::cout<<list.fetch(i)<<std::endl;
@@ -23,19 +23,19 @@ void Menu::list(const StaticList<Cancion, 50> &list){
 
 char Menu::options(){
     char ret;
-    std::cout<<"Z - Incluir nueva cancion     X - Eliminar una cancion  S - Busca una cancion   F-Salir"<<std::endl;
+    std::cout<<"Z - Incluir nueva cancion  X - Eliminar una cancion  S - Buscar una cancion  P - Ordenar la lista  F-Salir"<<std::endl;
     std::cin>>ret;
     std::cout<<std::endl<<"-------------------------------------------"<<std::endl;
     return ret;
 }
 
-int Menu::printMenu(const StaticList<Cancion, 50> &list){
+int Menu::printMenu(const StaticList<Cancion, 4000> &list){
     Menu::header();
     Menu::list(list);
     return Menu::options();
 }
 
-void Menu::scanCancion(StaticList<Cancion, 50> &list) {
+void Menu::scanCancion(StaticList<Cancion, 4000> &list) {
     Cancion temp;
     std::string strIn;
     int intIn;
@@ -61,7 +61,7 @@ void Menu::scanCancion(StaticList<Cancion, 50> &list) {
     list.insert(temp, intIn);
 }
 
-int Menu::deleteCancion(StaticList<Cancion, 50> &list) {
+int Menu::deleteCancion(StaticList<Cancion, 4000> &list) {
     int intIn;
     std::cout<<std::endl<<"Ingrese la posicion de la cancion en la lista: ";
     std::cin>>intIn;
@@ -69,7 +69,7 @@ int Menu::deleteCancion(StaticList<Cancion, 50> &list) {
     return 0;
 }
 
-int Menu::buscarCancion(StaticList<Cancion, 50> &list) {
+int Menu::buscarCancion(StaticList<Cancion, 4000> &list) {
     std::string strIn;
     bool method = 0;
     Cancion canIn;
@@ -79,7 +79,7 @@ int Menu::buscarCancion(StaticList<Cancion, 50> &list) {
     std::getline(std::cin >> std::ws, strIn);
     canIn.setAutor(strIn);
     canIn.setNombre(strIn);
-    std::cout<<std::endl<<"Que metodo desea usar (1-Linear, 0-Binaria): ";
+    std::cout<<std::endl<<"Que metodo desea usar (1 - Linear, 0 - Binaria): ";
     std::cin>>method;
     if(method)
         res = list.linearSearch(canIn);
@@ -92,4 +92,43 @@ int Menu::buscarCancion(StaticList<Cancion, 50> &list) {
         std::cout<<std::endl<<"Cancion no encontrada"<<std::endl;
 
     return 0;
+}
+
+void Menu::ordenarLista(StaticList<Cancion, 4000> &canciones) {
+    uint16_t metodoOrd;
+    bool campoAOrdenar;
+
+    std::cout<<std::endl<<"Que metodo desea usar?"
+    <<std::endl<<"0 - Burbuja (mejorada)"
+    <<std::endl<<"1 - Shell"
+    <<std::endl<<"2 - Insercion"
+    <<std::endl<<"3 - Seleccion"
+    <<std::endl<<"Opcion: ";
+    std::cin>>metodoOrd;
+
+    std::cout<<std::endl<<std::endl
+    <<"Como quiere ordenar la lista?"
+    <<std::endl<<"0 - Por nombre de cacion"
+    <<std::endl<<"1 - Por nombre de autor"
+    <<std::endl<<"Opcion: ";
+    std::cin>>campoAOrdenar;
+
+    switch(metodoOrd){
+        case 0:
+            if(campoAOrdenar)
+                canciones.sortByEnhancedBubble(&Cancion::compareByAutor);
+            else
+                canciones.sortByEnhancedBubble(&Cancion::compareByNombre);
+            break;
+
+        case 1:
+            break;
+
+        case 2:
+            break;
+
+        case 3:
+            break;
+
+    }
 }

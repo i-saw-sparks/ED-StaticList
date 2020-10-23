@@ -31,16 +31,14 @@ public:
 
     const std::string toString();
 
+    static bool compareByNombre(const Cancion&, const Cancion&);
+    static bool compareByAutor(const Cancion&, const Cancion&);
+
     bool operator==(const Cancion &rhs) const;
-
     bool operator!=(const Cancion &rhs) const;
-
     bool operator<(const Cancion &rhs) const;
-
     bool operator>(const Cancion &rhs) const;
-
     bool operator<=(const Cancion &rhs) const;
-
     bool operator>=(const Cancion &rhs) const;
 
     friend std::ostream &operator<<(std::ostream &os, const Cancion &cancion);

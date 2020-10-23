@@ -8,6 +8,7 @@
 #include <array>
 #include "StaticListException.h"
 #include <string>
+#include <functional>
 
 template<typename T, int MAXSIZE = 4096>
 class StaticList {
@@ -21,22 +22,28 @@ private:
 
 public:
     StaticList();
-
     StaticList(const StaticList &);
+
     bool isEmpty() const;
     bool isFull() const;
+
     void insert(const T &, const int &);
     void pushBack(const T &);
     void erase(const int &);
     T fetch(const int &) const;
+
     int getSize() const;
     int getFirst() const;
     int getLast() const;
     int getPrevious(const int &) const;
     int getNext(const int &) const;
+
     void eraseAll();
+
     int binarySearch(const T &);
     int linearSearch(const T &);
+
+    void sortByEnhancedBubble(std::function<bool(T, T)> comp);
 
     StaticList &operator=(const StaticList &);
 };
