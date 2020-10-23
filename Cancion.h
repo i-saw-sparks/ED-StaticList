@@ -31,8 +31,8 @@ public:
 
     const std::string toString() const;
 
-    static bool compareByNombre(const Cancion&, const Cancion&);
-    static bool compareByAutor(const Cancion&, const Cancion&);
+    static int compareByNombre(const Cancion&, const Cancion&);
+    static int compareByAutor(const Cancion&, const Cancion&);
 
     bool operator==(const Cancion &rhs) const;
     bool operator!=(const Cancion &rhs) const;

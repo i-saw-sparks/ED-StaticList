@@ -96,10 +96,10 @@ std::ostream &operator<<(std::ostream &os, const Cancion &cancion) {
     return os;
 }
 
-bool Cancion::compareByNombre(const Cancion &can1, const Cancion &can2) {
-    return can1.nombre == can2.nombre;
+int Cancion::compareByNombre(const Cancion &can1, const Cancion &can2) {
+    return can1.nombre.compare(can2.nombre);
 }
 
-bool Cancion::compareByAutor(const Cancion &can1, const Cancion &can2) {
-    return can1.autor == can2.autor;
+int Cancion::compareByAutor(const Cancion &can1, const Cancion &can2) {
+    return can1.autor.compare(can2.autor);
 }

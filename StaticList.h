@@ -20,7 +20,7 @@ private:
 
     bool validPos(const int &) const;
     void pushBack(const T &);
-
+    void swapData(T&, T&);
 public:
     StaticList();
     StaticList(const StaticList &);
@@ -43,10 +43,10 @@ public:
     int binarySearch(const T &);
     int linearSearch(const T &);
 
-    void sortByEnhancedBubble(std::function<bool(T, T)> comp);
-    void sortByShell(std::function<bool(T, T)> comp);
-    void sortByInsert(std::function<bool(T, T)> comp);
-    void sortBySelect(std::function<bool(T, T)> comp);
+    void sortByEnhancedBubble(std::function<int(T, T)> comp);
+    void sortByShell(std::function<int(T, T)> comp);
+    void sortByInsert(std::function<int(T, T)> comp);
+    void sortBySelect(std::function<int(T, T)> comp);
 
     StaticList &operator=(const StaticList &);
 };
@@ -197,7 +197,47 @@ int StaticList<T, MAXSIZE>::binarySearch(const T &look) {
         else
             i = mid +1;
     }
+
     return -1;
 }
+
+template<typename T, int MAXSIZE>
+void StaticList<T, MAXSIZE>::sortByEnhancedBubble(std::function<int(T, T)> comp) {
+    bool flag = false;
+    int i = last;
+    do {
+        flag = false;
+        for (int j = 0; j < i; ++j) {
+            if(comp(data[j], data[j+1]) > 0 ){
+                swapData(data[j], data[j+1]);
+                flag = true;
+            }
+        }
+        i--;
+    }while(flag);
+}
+
+template<typename T, int MAXSIZE>
+void StaticList<T, MAXSIZE>::sortByShell(std::function<int(T, T)> comp) {
+
+}
+
+template<typename T, int MAXSIZE>
+void StaticList<T, MAXSIZE>::sortByInsert(std::function<int(T, T)> comp) {
+
+}
+
+template<typename T, int MAXSIZE>
+void StaticList<T, MAXSIZE>::sortBySelect(std::function<int(T, T)> comp) {
+
+}
+
+template<typename T, int MAXSIZE>
+void StaticList<T, MAXSIZE>::swapData(T& d1, T& d2) {
+    T aux(d1);
+    d1 = d2;
+    d2 = aux;
+}
+
 
 #endif //LISTA_ESTATICA_STATICLIST_H

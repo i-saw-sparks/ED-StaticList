@@ -14,18 +14,17 @@ Menu::Menu() {
 }
 
 void Menu::list(const StaticList<Cancion, 4000> &list){
-    std::cout<<"\033[1;44;31m";
+    std::cout<<"\033[1;32m";
     for (int i = 0; i < list.getSize(); ++i) {
         std::cout<<list.fetch(i)<<std::endl;
     }
-    std::cout<<"\033[0m"<<std::endl<<"-------------------------------------------"<<std::endl;
+    std::cout<<"\033[0m"<<"-------------------------------------------"<<std::endl;
 }
 
 char Menu::options(){
     char ret;
     std::cout<<"Z - Incluir nueva cancion  X - Eliminar una cancion  S - Buscar una cancion  P - Ordenar la lista  F-Salir"<<std::endl;
     std::cin>>ret;
-    std::cout<<std::endl<<"-------------------------------------------"<<std::endl;
     return ret;
 }
 
@@ -63,6 +62,7 @@ void Menu::scanCancion(StaticList<Cancion, 4000> &list) {
 
 int Menu::deleteCancion(StaticList<Cancion, 4000> &list) {
     int intIn;
+    std::cout<<"-------------------------------------------"<<std::endl;
     std::cout<<std::endl<<"Ingrese la posicion de la cancion en la lista: ";
     std::cin>>intIn;
     list.erase(intIn);
@@ -75,6 +75,7 @@ int Menu::buscarCancion(StaticList<Cancion, 4000> &list) {
     Cancion canIn;
     int res;
 
+    std::cout<<"-------------------------------------------"<<std::endl;
     std::cout<<std::endl<<"Ingrese el autor o el nombre de la cancion que desea buscar: ";
     std::getline(std::cin >> std::ws, strIn);
     canIn.setAutor(strIn);
@@ -86,8 +87,11 @@ int Menu::buscarCancion(StaticList<Cancion, 4000> &list) {
     else
         res = list.binarySearch(canIn);
 
-    if(res!=-1)
-        std::cout<<std::endl<<list.fetch(res).toString()<<std::endl;
+    if(res!=-1) {
+        std::cout << "\033[1;34m";
+        std::cout << std::endl << list.fetch(res).toString() << std::endl;
+        std::cout << "\033[0m";
+    }
     else
         std::cout<<std::endl<<"Cancion no encontrada"<<std::endl;
 
@@ -98,6 +102,7 @@ void Menu::ordenarLista(StaticList<Cancion, 4000> &canciones) {
     uint16_t metodoOrd;
     bool campoAOrdenar;
 
+    std::cout<<"-------------------------------------------"<<std::endl;
     std::cout<<std::endl<<"Que metodo desea usar?"
     <<std::endl<<"0 - Burbuja (mejorada)"
     <<std::endl<<"1 - Shell"
@@ -106,7 +111,7 @@ void Menu::ordenarLista(StaticList<Cancion, 4000> &canciones) {
     <<std::endl<<"Opcion: ";
     std::cin>>metodoOrd;
 
-    std::cout<<std::endl<<std::endl
+    std::cout<<"-------------------------------------------"<<std::endl
     <<"Como quiere ordenar la lista?"
     <<std::endl<<"0 - Por nombre de cacion"
     <<std::endl<<"1 - Por nombre de autor"
