@@ -222,13 +222,41 @@ void StaticList<T, MAXSIZE>::sortByShell(std::function<int(T, T)> comp) {
 
 }
 
-template<typename T, int MAXSIZE>
+template<typename T, int MAXSIZE> //toDo
 void StaticList<T, MAXSIZE>::sortByInsert(std::function<int(T, T)> comp) {
+    int j;
+    T aux;
 
+    for(int i = 1; i <= last; ++i){
+        aux = data[i];
+        j = i;
+        while(j>0 && comp(aux, data[j-1]) < 0){
+            data[j] = data[j-1];
+            j--;
+        }
+        if(i != j){
+            data[j] = aux;
+        }
+    }
 }
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::sortBySelect(std::function<int(T, T)> comp) {
+    int aux;
+
+    for(int i = 0; i < last; i++){
+        aux = i;
+        for(int j = i+1; j <= last; j++){
+            if(comp(data[j], data[aux]) < 0) {
+                aux = j;
+            }
+        }
+
+        if(i != aux){
+            swapData(data[i], data[aux]);
+        }
+
+    }
 
 }
 
