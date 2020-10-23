@@ -19,6 +19,7 @@ private:
     void copy(const StaticList &);
 
     bool validPos(const int &) const;
+    void pushBack(const T &);
 
 public:
     StaticList();
@@ -28,7 +29,6 @@ public:
     bool isFull() const;
 
     void insert(const T &, const int &);
-    void pushBack(const T &);
     void erase(const int &);
     T fetch(const int &) const;
 
@@ -139,7 +139,7 @@ int StaticList<T, MAXSIZE>::getSize() const {
 template<typename T, int MAXSIZE>
 int StaticList<T, MAXSIZE>::getFirst() const {
     if (isEmpty())
-        throw StaticListException("Invalid memory access");
+        return -1;
     return 0;
 }
 
@@ -153,7 +153,7 @@ int StaticList<T, MAXSIZE>::getPrevious(const int &pos) const {
     if (validPos(pos - 1))
         return pos - 1;
     else
-        throw StaticListException("Invalid memory access");
+        return -1;
 }
 
 template<typename T, int MAXSIZE>
@@ -161,7 +161,7 @@ int StaticList<T, MAXSIZE>::getNext(const int &pos) const {
     if (pos + 1 <= last + 1)
         return pos + 1;
     else
-        throw StaticListException("Invalid memory access");
+        return -1;
 }
 
 template<typename T, int MAXSIZE>
