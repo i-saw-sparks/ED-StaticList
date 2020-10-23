@@ -86,3 +86,12 @@ bool Cancion::operator<=(const Cancion &rhs) const {
 bool Cancion::operator>=(const Cancion &rhs) const {
     return !(*this < rhs);
 }
+
+std::ostream &operator<<(std::ostream &os, const Cancion &cancion) {
+    os <<std::left<< "nombre: " << std::setw(23)<< cancion.nombre
+       << "| autor: "<< std::setw(15)<< cancion.autor
+       << "| interprete: " << std::setw(15)<< cancion.interprete
+       << "| archivo: " << std::setw(26)<< cancion.archivoId+".mp3"
+       << "| posicion: " << cancion.posicion;
+    return os;
+}

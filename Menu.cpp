@@ -14,10 +14,11 @@ Menu::Menu() {
 }
 
 void Menu::list(const StaticList<Cancion, 50> &list){
+    std::cout<<"\033[1;44;31m";
     for (int i = 0; i < list.getSize(); ++i) {
-        std::cout<<list.fetch(i).toString();
+        std::cout<<list.fetch(i)<<std::endl;
     }
-    std::cout<<std::endl<<"-------------------------------------------"<<std::endl;
+    std::cout<<"\033[0m"<<std::endl<<"-------------------------------------------"<<std::endl;
 }
 
 char Menu::options(){

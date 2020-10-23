@@ -7,6 +7,8 @@
 
 #include <string>
 #include <iomanip>
+#include <ostream>
+#include <iomanip>
 
 class Cancion {
 private:
@@ -40,6 +42,8 @@ public:
     bool operator<=(const Cancion &rhs) const;
 
     bool operator>=(const Cancion &rhs) const;
+
+    friend std::ostream &operator<<(std::ostream &os, const Cancion &cancion);
 };
 
 
