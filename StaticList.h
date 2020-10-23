@@ -40,8 +40,8 @@ public:
 
     void eraseAll();
 
-    int binarySearch(const T &);
-    int linearSearch(const T &);
+    int binarySearch(const T &, std::function<int(T, T)> comp);
+    int linearSearch(const T &, std::function<int(T, T)> comp);
 
     void sortByEnhancedBubble(std::function<int(T, T)> comp);
     void sortByShell(std::function<int(T, T)> comp);
@@ -176,23 +176,23 @@ StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy)
 }
 
 template<typename T, int MAXSIZE>
-int StaticList<T, MAXSIZE>::linearSearch(const T &look) {
+int StaticList<T, MAXSIZE>::linearSearch(const T &look, std::function<int(T, T)> comp) {
     for (int i = 0; i < this->getSize(); ++i) {
-        if(look == this->fetch(i))
+        if(comp(look, data[i]) == 0)
             return i;
     }
     return -1;
 }
 
 template<typename T, int MAXSIZE>
-int StaticList<T, MAXSIZE>::binarySearch(const T &look) {
-    int i = 0, j = this->getLast(), mid;
+int StaticList<T, MAXSIZE>::binarySearch(const T &look, std::function<int(T, T)> comp) {
+    int i = 0, j = last, mid;
 
     while(i <= j){
         mid = (i+j)/2;
-        if(this->fetch(mid) == look)
+        if(comp(data[mid], look) == 0)
             return mid;
-        if(look < this->fetch(mid))
+        if(comp(look, data[mid]) < 0)
             j = mid-1;
         else
             i = mid +1;
@@ -203,7 +203,7 @@ int StaticList<T, MAXSIZE>::binarySearch(const T &look) {
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::sortByEnhancedBubble(std::function<int(T, T)> comp) {
-    bool flag = false;
+    bool flag;
     int i = last;
     do {
         flag = false;
@@ -219,10 +219,19 @@ void StaticList<T, MAXSIZE>::sortByEnhancedBubble(std::function<int(T, T)> comp)
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::sortByShell(std::function<int(T, T)> comp) {
+    float factor = 1.f/2.f;
+    int dif = ((last +1 ) * factor);
 
+    while(dif > 0){
+        for(int i = dif; i<= last; ++i){
+            for(int j = i; j >= dif && comp(data[j-dif], data[j]) > 0; j-= dif)
+                swapData(data[j - dif], data[j]);
+        }
+        dif *= factor;
+    }
 }
 
-template<typename T, int MAXSIZE> //toDo
+template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::sortByInsert(std::function<int(T, T)> comp) {
     int j;
     T aux;
@@ -243,7 +252,6 @@ void StaticList<T, MAXSIZE>::sortByInsert(std::function<int(T, T)> comp) {
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::sortBySelect(std::function<int(T, T)> comp) {
     int aux;
-
     for(int i = 0; i < last; i++){
         aux = i;
         for(int j = i+1; j <= last; j++){
@@ -257,7 +265,6 @@ void StaticList<T, MAXSIZE>::sortBySelect(std::function<int(T, T)> comp) {
         }
 
     }
-
 }
 
 template<typename T, int MAXSIZE>

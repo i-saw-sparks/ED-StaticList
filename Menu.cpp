@@ -73,19 +73,35 @@ int Menu::buscarCancion(StaticList<Cancion, 4000> &list) {
     std::string strIn;
     bool method = 0;
     Cancion canIn;
-    int res;
-
-    std::cout<<"-------------------------------------------"<<std::endl;
-    std::cout<<std::endl<<"Ingrese el autor o el nombre de la cancion que desea buscar: ";
-    std::getline(std::cin >> std::ws, strIn);
-    canIn.setAutor(strIn);
-    canIn.setNombre(strIn);
+    int res, campoABuscar;
+    std::cout<<"-------------------------------------------"<<std::endl
+    <<"Como quiere ordenar la lista?"
+    <<std::endl<<"0 - Por nombre de cancion"
+    <<std::endl<<"1 - Por nombre de autor"
+    <<std::endl<<"Opcion: ";
+    std::cin>>campoABuscar;
     std::cout<<std::endl<<"Que metodo desea usar (1 - Linear, 0 - Binaria): ";
     std::cin>>method;
-    if(method)
-        res = list.linearSearch(canIn);
-    else
-        res = list.binarySearch(canIn);
+
+    if(campoABuscar){
+        std::cout<<std::endl<<"Ingrese el autor de la cancion que desea buscar: ";
+        std::getline(std::cin >> std::ws, strIn);
+        canIn.setAutor(strIn);
+        if(method)
+            res = list.linearSearch(canIn, Cancion::compareByAutor);
+        else
+            res = list.binarySearch(canIn, Cancion::compareByAutor);
+    }else{
+        std::cout<<std::endl<<"Ingrese el nombre de la cancion que desea buscar: ";
+        std::getline(std::cin >> std::ws, strIn);
+        canIn.setNombre(strIn);
+        if(method)
+            res = list.linearSearch(canIn, Cancion::compareByNombre);
+        else
+            res = list.binarySearch(canIn, Cancion::compareByNombre);
+    }
+
+    std::cout<<"-------------------------------------------"<<std::endl;
 
     if(res!=-1) {
         std::cout << "\033[1;34m";
@@ -113,7 +129,7 @@ void Menu::ordenarLista(StaticList<Cancion, 4000> &canciones) {
 
     std::cout<<"-------------------------------------------"<<std::endl
     <<"Como quiere ordenar la lista?"
-    <<std::endl<<"0 - Por nombre de cacion"
+    <<std::endl<<"0 - Por nombre de cancion"
     <<std::endl<<"1 - Por nombre de autor"
     <<std::endl<<"Opcion: ";
     std::cin>>campoAOrdenar;
