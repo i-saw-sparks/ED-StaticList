@@ -52,7 +52,7 @@ void Cancion::setArchivoId(const std::string &archivo) {
     Cancion::archivoId = archivo;
 }
 
-const std::string Cancion::toString() {
+const std::string Cancion::toString() const{
     std::string ret;
     ret += autor + " | " + interprete + " | " + nombre + " | " + archivoId + ".mp3 | " +std::to_string(posicion) + "\n";
     return ret;
@@ -94,4 +94,12 @@ std::ostream &operator<<(std::ostream &os, const Cancion &cancion) {
        << "| archivo: " << std::setw(26)<< cancion.archivoId+".mp3"
        << "| posicion: " << cancion.posicion;
     return os;
+}
+
+bool Cancion::compareByNombre(const Cancion &can1, const Cancion &can2) {
+    return can1.nombre == can2.nombre;
+}
+
+bool Cancion::compareByAutor(const Cancion &can1, const Cancion &can2) {
+    return can1.autor == can2.autor;
 }

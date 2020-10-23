@@ -44,6 +44,9 @@ public:
     int linearSearch(const T &);
 
     void sortByEnhancedBubble(std::function<bool(T, T)> comp);
+    void sortByShell(std::function<bool(T, T)> comp);
+    void sortByInsert(std::function<bool(T, T)> comp);
+    void sortBySelect(std::function<bool(T, T)> comp);
 
     StaticList &operator=(const StaticList &);
 };

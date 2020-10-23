@@ -120,15 +120,25 @@ void Menu::ordenarLista(StaticList<Cancion, 4000> &canciones) {
             else
                 canciones.sortByEnhancedBubble(&Cancion::compareByNombre);
             break;
-
         case 1:
+            if(campoAOrdenar)
+                canciones.sortByShell(&Cancion::compareByAutor);
+            else
+                canciones.sortByShell(&Cancion::compareByNombre);
             break;
 
         case 2:
+            if(campoAOrdenar)
+                canciones.sortByInsert(&Cancion::compareByAutor);
+            else
+                canciones.sortByInsert(&Cancion::compareByNombre);
             break;
 
         case 3:
+            if(campoAOrdenar)
+                canciones.sortBySelect(&Cancion::compareByAutor);
+            else
+                canciones.sortBySelect(&Cancion::compareByNombre);
             break;
-
     }
 }

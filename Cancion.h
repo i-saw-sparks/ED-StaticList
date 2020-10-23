@@ -29,7 +29,7 @@ public:
     const std::string &getArchivoId() const;
     void setArchivoId(const std::string &archivoId);
 
-    const std::string toString();
+    const std::string toString() const;
 
     static bool compareByNombre(const Cancion&, const Cancion&);
     static bool compareByAutor(const Cancion&, const Cancion&);
