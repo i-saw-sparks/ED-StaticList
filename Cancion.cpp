@@ -103,3 +103,5 @@ int Cancion::compareByNombre(const Cancion &can1, const Cancion &can2) {
 int Cancion::compareByAutor(const Cancion &can1, const Cancion &can2) {
     return can1.autor.compare(can2.autor);
 }
+
+

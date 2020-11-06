@@ -18,6 +18,7 @@ public:
     Cancion();
     Cancion(const Cancion&);
 
+
     const std::string &getNombre() const;
     void setNombre(const std::string &nombre);
     int getPosicion() const;

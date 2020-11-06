@@ -14,17 +14,18 @@
 template<typename T, int MAXSIZE = 4096>
 class StaticList {
 private:
-    std::array<T, MAXSIZE> data;
+    T *data[MAXSIZE];
     int last;
 
     void copy(const StaticList &);
 
     bool validPos(const int &) const;
     void pushBack(const T &);
-    void swapData(T&, T&);
+    void swapPointers(int, int);
 public:
     StaticList();
     StaticList(const StaticList &);
+    ~StaticList();
 
     bool isEmpty() const;
     bool isFull() const;
@@ -57,19 +58,26 @@ public:
 };
 
 template<typename T, int MAXSIZE>
-StaticList<T, MAXSIZE>::StaticList():last(-1) {}
+StaticList<T, MAXSIZE>::StaticList():last(-1) {
+    for(T* n : data){
+        n = nullptr;
+    }
+}
 
 template<typename T, int MAXSIZE>
 StaticList<T, MAXSIZE>::StaticList(const StaticList<T, MAXSIZE> &cpy) {
+    for(T* n : data){
+        n = nullptr;
+    }
     this->copy(cpy);
 }
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::copy(const StaticList<T, MAXSIZE> &cpy) {
     for (int i = 0; i < cpy.last + 1; ++i) {
-        this->data[i] = cpy.fetch(i);
+        data[i] = cpy.data[i];
     }
-    this->last = cpy.last;
+    last = cpy.last;
 }
 
 template<typename T, int MAXSIZE>
@@ -97,7 +105,8 @@ void StaticList<T, MAXSIZE>::insert(const T &ins, const int &pos) {
     for (int i = last; i>pos ; --i) {
         data[i+1] = data[i];
     }
-    data[pos+1] = ins;
+
+    data[pos+1] = new T(ins);
     last++;
 }
 
@@ -111,20 +120,22 @@ void StaticList<T, MAXSIZE>::pushBack(const T &ins) {
     if (isFull())
         throw StaticListException("Invalid memory access, the list was full");
 
-    data[last + 1] = ins;
+    data[last + 1] = new T(ins);
     last++;
 }
-
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::erase(const int &pos) {
     if (!validPos(pos))
         throw StaticListException("Invalid memory access");
 
+    delete data[pos];
+
     for (int i = pos; i < last ; ++i) {
         data[i] = data[i+1];
     }
 
+    data[last] = nullptr;
     last--;
 }
 
@@ -133,7 +144,7 @@ template<typename T, int MAXSIZE>
 T StaticList<T, MAXSIZE>::fetch(const int &pos) const {
     if (!validPos(pos))
         throw StaticListException("Invalid memory access");
-    return data[pos];
+    return *(data[pos]);
 }
 
 template<typename T, int MAXSIZE>
@@ -171,6 +182,10 @@ int StaticList<T, MAXSIZE>::getNext(const int &pos) const {
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::eraseAll() {
+    for (int i = 0; i < last; ++i) {
+        delete data[i];
+        data[i] = nullptr;
+    }
     last = -1;
 }
 
@@ -183,7 +198,7 @@ StaticList<T, MAXSIZE>& StaticList<T, MAXSIZE>::operator=(const StaticList &cpy)
 template<typename T, int MAXSIZE>
 int StaticList<T, MAXSIZE>::linearSearch(const T &look, std::function<int(T, T)> comp) {
     for (int i = 0; i < this->getSize(); ++i) {
-        if(comp(look, data[i]) == 0)
+        if(comp(look, *(data[i])) == 0)
             return i;
     }
     return -1;
@@ -195,9 +210,9 @@ int StaticList<T, MAXSIZE>::binarySearch(const T &look, std::function<int(T, T)>
 
     while(i <= j){
         mid = (i+j)/2;
-        if(comp(data[mid], look) == 0)
+        if(comp(*(data[mid]), look) == 0)
             return mid;
-        if(comp(look, data[mid]) < 0)
+        if(comp(look, *(data[mid])) < 0)
             j = mid-1;
         else
             i = mid +1;
@@ -213,15 +228,12 @@ void StaticList<T, MAXSIZE>::sortByEnhancedBubble(std::function<int(T, T)> comp)
     do {
         flag = false;
         for (int j = 0; j < i; ++j) {
-            if(comp(data[j], data[j+1]) > 0 ){
-                swapData(data[j], data[j+1]);
+            if(comp(*(data[j]), *(data[j+1])) > 0 ){
+                swapPointers(j, j+1);
                 flag = true;
             }
         }
         i--;
-        if(i%10 == 0){
-            int b;
-        }
     }while(flag);
 }
 
@@ -232,8 +244,8 @@ void StaticList<T, MAXSIZE>::sortByShell(std::function<int(T, T)> comp) {
 
     while(dif > 0){
         for(int i = dif; i<= last; ++i){
-            for(int j = i; j >= dif && comp(data[j-dif], data[j]) > 0; j-= dif)
-                swapData(data[j - dif], data[j]);
+            for(int j = i; j >= dif && comp(*(data[j-dif]), *(data[j])) > 0; j-= dif)
+                swapPointers(j - dif, j);
         }
         dif *= factor;
     }
@@ -242,12 +254,12 @@ void StaticList<T, MAXSIZE>::sortByShell(std::function<int(T, T)> comp) {
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::sortByInsert(std::function<int(T, T)> comp) {
     int j;
-    T aux;
+    T* aux;
 
     for(int i = 1; i <= last; ++i){
         aux = data[i];
         j = i;
-        while(j>0 && comp(aux, data[j-1]) < 0){
+        while(j>0 && comp(*aux, *(data[j-1])) < 0){
             data[j] = data[j-1];
             j--;
         }
@@ -263,13 +275,13 @@ void StaticList<T, MAXSIZE>::sortBySelect(std::function<int(T, T)> comp) {
     for(int i = 0; i < last; i++){
         aux = i;
         for(int j = i+1; j <= last; j++){
-            if(comp(data[j], data[aux]) < 0) {
+            if(comp(*(data[j]), *(data[aux])) < 0) {
                 aux = j;
             }
         }
 
         if(i != aux){
-            swapData(data[i], data[aux]);
+            swapPointers(i, aux);
         }
 
     }
@@ -291,19 +303,19 @@ void StaticList<T, MAXSIZE>::sortByMerge(const int& left, const int& right, std:
     sortByMerge(left, mid, comp);
     sortByMerge(mid + 1, right, comp);
 
-    static T aux[MAXSIZE];
+    static T *aux[MAXSIZE];
     for(int i = left; i <= right; i++)
         aux[i] = data[i];
 
     int i(left), j(mid + 1), iter(left);
 
     while(i <= mid && j<= right){
-        while(i <= mid && comp(aux[i], aux[j]) <= 0) {
+        while(i <= mid && comp(*(aux[i]), *(aux[j])) <= 0) {
             data[iter++] = aux[i++];
         }
 
         if(i <= mid) {
-            while (j <= right && comp(aux[j], aux[i]) <= 0) {
+            while (j <= right && comp(*(aux[j]), *(aux[i])) <= 0) {
                 data[iter++] = aux[j++];
             }
         }
@@ -328,9 +340,9 @@ void StaticList<T, MAXSIZE>::quickSort(const int& left, const int& right, std::f
     int i(left), j(right);
 
     while(i < j) {
-        while (i < j && comp(data[i], data[right]) <= 0)
+        while (i < j && comp(*(data[i]), *(data[right])) <= 0)
             i++;
-        while (i < j && comp(data[j], data[right]) >= 0)
+        while (i < j && comp(*(data[j]), *(data[right])) >= 0)
             j--;
         if(i != j)
             swapData(data[i], data[j]);
@@ -344,11 +356,18 @@ void StaticList<T, MAXSIZE>::quickSort(const int& left, const int& right, std::f
 }
 
 template<typename T, int MAXSIZE>
-void StaticList<T, MAXSIZE>::swapData(T& d1, T& d2) {
-    T aux(d1);
-    d1 = d2;
-    d2 = aux;
+void StaticList<T, MAXSIZE>::swapPointers(int pos1, int pos2) {
+    T* aux(data[pos1]);
+    data[pos1] = data[pos2];
+    data[pos2] = aux;
 }
 
+template<typename T, int MAXSIZE>
+StaticList<T, MAXSIZE>::~StaticList(){
+    for (int i = 0; i <= last; ++i) {
+        delete data[i];
+        data[i] = nullptr;
+    }
+}
 
 #endif //LISTA_ESTATICA_STATICLIST_H
