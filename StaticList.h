@@ -10,6 +10,7 @@
 #include <string>
 #include <functional>
 
+
 template<typename T, int MAXSIZE = 4096>
 class StaticList {
 private:
