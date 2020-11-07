@@ -182,7 +182,7 @@ int StaticList<T, MAXSIZE>::getNext(const int &pos) const {
 
 template<typename T, int MAXSIZE>
 void StaticList<T, MAXSIZE>::eraseAll() {
-    for (int i = 0; i < last; ++i) {
+    for (int i = 0; i <= last; ++i) {
         delete data[i];
         data[i] = nullptr;
     }
